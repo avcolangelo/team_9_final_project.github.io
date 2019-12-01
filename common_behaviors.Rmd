@@ -35,7 +35,10 @@ knitr::opts_chunk$set(
 ```{r wrangle_data, include=FALSE}
 squirrel_data =
   read_csv("./data/squirrel_data.csv") %>% 
-  janitor::clean_names() %>%
+  janitor::clean_names()
+
+squirrel_behavior = 
+  squirrel_data %>%
   select(unique_squirrel_id, running, chasing, climbing, eating, foraging) %>%
   mutate(
     running = as.factor(running),
@@ -57,16 +60,36 @@ squirrel_data =
   running:foraging,
  names_to = "activity",
  values_to = "participation") %>%
-    mutate(participation = na_if(participation, "no")) %>%
-  view
+    mutate(participation = na_if(participation, "no"))
+```
+## Who they are:
+There were `r nrow(squirrel_data)` unique squirrels spotted in Central Park in October of 2018!
+
+## What they look like:
+Mostly gray.
+
+```{r fur_plot, echo=FALSE}
+
+squirrel_color = 
+  squirrel_data %>%
+  select(primary_fur_color) 
+
+squirrel_color_plot = squirrel_color[!is.na(squirrel_color$primary_fur_color),] 
+
+squirrel_color_plot <- within(squirrel_color_plot, primary_fur_color <- factor(primary_fur_color,levels = names(sort(table(primary_fur_color),decreasing = TRUE))))
+
+squirrel_color_plot %>%
+  ggplot(aes(x = primary_fur_color)) +  geom_bar(fill = "grey") + labs(title = "Primary Squirrel Fur Color", x = "Color", y = "Number of Squirrels")
 ```
 
+## What they do:
+Foraging is the most common observed behavior.
 ```{r behavior_plot, echo=FALSE}
-squirrel_plot_data = squirrel_data[!is.na(squirrel_data$participation),] 
+squirrel_plot_data = squirrel_behavior[!is.na(squirrel_behavior$participation),] 
 
 squirrel_plot_data <- within(squirrel_plot_data, participation <- factor(participation,levels = names(sort(table(participation),decreasing = TRUE))))
 
 squirrel_plot_data %>%
 ggplot(aes(x = participation)) +  geom_bar(fill = "green") + labs(title = "Common Squirrel Behaviors", x = "Behavior", y = "Number of Squirrels Exhibiting Behavior")
 ```
- 
+

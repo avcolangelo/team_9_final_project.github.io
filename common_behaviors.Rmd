@@ -1,5 +1,5 @@
 ---
-title: "Most Common Squirrel Behaviors"
+title: "About Central Park Squirrels"
 output: github_document
 editor_options: 
   chunk_output_type: console
@@ -31,8 +31,8 @@ knitr::opts_chunk$set(
   
 ```
 
-Most Common Squirrel Behaviors
-```{r}
+
+```{r wrangle_data, include=FALSE}
 squirrel_data =
   read_csv("./data/squirrel_data.csv") %>% 
   janitor::clean_names() %>%
@@ -61,12 +61,12 @@ squirrel_data =
   view
 ```
 
-
-```{r}
+```{r behavior_plot, echo=FALSE}
 squirrel_plot_data = squirrel_data[!is.na(squirrel_data$participation),] 
 
-squirrel_plot_data %>%
-ggplot(aes(x = participation)) +
-  geom_bar()
-```
+squirrel_plot_data <- within(squirrel_plot_data, participation <- factor(participation,levels = names(sort(table(participation),decreasing = TRUE))))
 
+squirrel_plot_data %>%
+ggplot(aes(x = participation)) +  geom_bar(fill = "green") + labs(title = "Common Squirrel Behaviors", x = "Behavior", y = "Number of Squirrels Exhibiting Behavior")
+```
+ 

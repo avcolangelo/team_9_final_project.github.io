@@ -12,7 +12,7 @@
 
 
 
-<title>Most Common Squirrel Behaviors</title>
+<title>About Central Park Squirrels</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -300,70 +300,12 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Most Common Squirrel Behaviors</h1>
+<h1 class="title toc-ignore">About Central Park Squirrels</h1>
 
 </div>
 
 
-<p>Most Common Squirrel Behaviors</p>
-<pre class="r"><code>squirrel_data =
-  read_csv(&quot;./data/squirrel_data.csv&quot;) %&gt;% 
-  janitor::clean_names() %&gt;%
-  select(unique_squirrel_id, running, chasing, climbing, eating, foraging) %&gt;%
-  mutate(
-    running = as.factor(running),
-    chasing = as.factor(chasing),
-    climbing = as.factor(climbing),
-    eating = as.factor(eating),
-    foraging = as.factor(foraging),
-    running = 
-      recode(running, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;running&quot;),
-    chasing =
-      recode(chasing, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;chasing&quot;),
-    climbing =
-      recode(climbing, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;climbing&quot;),
-    eating =
-      recode(eating, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;eating&quot;),
-    foraging =
-      recode(foraging, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;foraging&quot;)) %&gt;%
-  pivot_longer(
-  running:foraging,
- names_to = &quot;activity&quot;,
- values_to = &quot;participation&quot;) %&gt;%
-    mutate(participation = na_if(participation, &quot;no&quot;)) %&gt;%
-  view</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   .default = col_character(),
-##   X = col_double(),
-##   Y = col_double(),
-##   Date = col_double(),
-##   `Hectare Squirrel Number` = col_double(),
-##   Running = col_logical(),
-##   Chasing = col_logical(),
-##   Climbing = col_logical(),
-##   Eating = col_logical(),
-##   Foraging = col_logical(),
-##   Kuks = col_logical(),
-##   Quaas = col_logical(),
-##   Moans = col_logical(),
-##   `Tail flags` = col_logical(),
-##   `Tail twitches` = col_logical(),
-##   Approaches = col_logical(),
-##   Indifferent = col_logical(),
-##   `Runs from` = col_logical(),
-##   `Zip Codes` = col_number(),
-##   `Community Districts` = col_double(),
-##   `Borough Boundaries` = col_double()
-##   # ... with 2 more columns
-## )</code></pre>
-<pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>squirrel_plot_data = squirrel_data[!is.na(squirrel_data$participation),] 
-
-squirrel_plot_data %&gt;%
-ggplot(aes(x = participation)) +
-  geom_bar()</code></pre>
-<p><img src="common_behaviors_files/figure-html/unnamed-chunk-2-1.png" width="90%" /></p>
+<p><img src="common_behaviors_files/figure-html/behavior_plot-1.png" width="90%" /></p>
 
 
 

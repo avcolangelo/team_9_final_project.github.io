@@ -308,7 +308,28 @@ $(document).ready(function () {
 <p>Most Common Squirrel Behaviors</p>
 <pre class="r"><code>squirrel_data =
   read_csv(&quot;./data/squirrel_data.csv&quot;) %&gt;% 
-  janitor::clean_names() %&gt;% view</code></pre>
+  janitor::clean_names() %&gt;%
+  select(unique_squirrel_id, running, chasing, climbing, eating, foraging, other_activities) %&gt;%
+  mutate(
+    running = as.factor(running),
+    chasing = as.factor(chasing),
+    climbing = as.factor(climbing),
+    eating = as.factor(eating),
+    foraging = as.factor(foraging),
+    running = 
+      recode(running, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;running&quot;),
+    chasing =
+      recode(chasing, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;chasing&quot;),
+    climbing =
+      recode(climbing, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;climbing&quot;),
+    eating =
+      recode(eating, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;eating&quot;),
+    foraging =
+      recode(foraging, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;foraging&quot;)) %&gt;%
+  pivot_longer(
+    running:other_activities,
+    names_to = &quot;activity&quot;,
+    values_to = &quot;participation&quot;) %&gt;% view()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_character(),
@@ -335,6 +356,8 @@ $(document).ready(function () {
 ##   # ... with 2 more columns
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>#squirrel_data %&gt;% 
+ # plot_ly(x = ~cuisine_description, y = ~n, type = &quot;bar&quot;</code></pre>
 
 
 

@@ -1,11 +1,13 @@
 ---
 title: "Most Common Squirrel Behaviors"
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(rvest)
+library(plotly)
 
 
 knitr::opts_chunk$set(
@@ -32,6 +34,33 @@ Most Common Squirrel Behaviors
 ```{r}
 squirrel_data =
   read_csv("./data/squirrel_data.csv") %>% 
-  janitor::clean_names() %>% view
+  janitor::clean_names() %>%
+  select(unique_squirrel_id, running, chasing, climbing, eating, foraging, other_activities) %>%
+  mutate(
+    running = as.factor(running),
+    chasing = as.factor(chasing),
+    climbing = as.factor(climbing),
+    eating = as.factor(eating),
+    foraging = as.factor(foraging),
+    running = 
+      recode(running, "FALSE" = "no", "TRUE" = "running"),
+    chasing =
+      recode(chasing, "FALSE" = "no", "TRUE" = "chasing"),
+    climbing =
+      recode(climbing, "FALSE" = "no", "TRUE" = "climbing"),
+    eating =
+      recode(eating, "FALSE" = "no", "TRUE" = "eating"),
+    foraging =
+      recode(foraging, "FALSE" = "no", "TRUE" = "foraging")) %>%
+  pivot_longer(
+    running:other_activities,
+    names_to = "activity",
+    values_to = "participation") %>% view()
+```
+
+
+```{r}
+#squirrel_data %>% 
+ # plot_ly(x = ~cuisine_description, y = ~n, type = "bar"
 ```
 

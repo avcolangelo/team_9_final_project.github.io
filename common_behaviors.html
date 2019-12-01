@@ -309,7 +309,7 @@ $(document).ready(function () {
 <pre class="r"><code>squirrel_data =
   read_csv(&quot;./data/squirrel_data.csv&quot;) %&gt;% 
   janitor::clean_names() %&gt;%
-  select(unique_squirrel_id, running, chasing, climbing, eating, foraging, other_activities) %&gt;%
+  select(unique_squirrel_id, running, chasing, climbing, eating, foraging) %&gt;%
   mutate(
     running = as.factor(running),
     chasing = as.factor(chasing),
@@ -327,9 +327,11 @@ $(document).ready(function () {
     foraging =
       recode(foraging, &quot;FALSE&quot; = &quot;no&quot;, &quot;TRUE&quot; = &quot;foraging&quot;)) %&gt;%
   pivot_longer(
-    running:other_activities,
-    names_to = &quot;activity&quot;,
-    values_to = &quot;participation&quot;) %&gt;% view()</code></pre>
+  running:foraging,
+ names_to = &quot;activity&quot;,
+ values_to = &quot;participation&quot;) %&gt;%
+    mutate(participation = na_if(participation, &quot;no&quot;)) %&gt;%
+  view</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_character(),
@@ -356,8 +358,12 @@ $(document).ready(function () {
 ##   # ... with 2 more columns
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<pre class="r"><code>#squirrel_data %&gt;% 
- # plot_ly(x = ~cuisine_description, y = ~n, type = &quot;bar&quot;</code></pre>
+<pre class="r"><code>squirrel_plot_data = squirrel_data[!is.na(squirrel_data$participation),] 
+
+squirrel_plot_data %&gt;%
+ggplot(aes(x = participation)) +
+  geom_bar()</code></pre>
+<p><img src="common_behaviors_files/figure-html/unnamed-chunk-2-1.png" width="90%" /></p>
 
 
 

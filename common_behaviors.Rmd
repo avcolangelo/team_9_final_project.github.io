@@ -8,6 +8,7 @@ editor_options:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(plotly)
+library(dplyr)
 
 
 knitr::opts_chunk$set(
@@ -35,7 +36,7 @@ Most Common Squirrel Behaviors
 squirrel_data =
   read_csv("./data/squirrel_data.csv") %>% 
   janitor::clean_names() %>%
-  select(unique_squirrel_id, running, chasing, climbing, eating, foraging, other_activities) %>%
+  select(unique_squirrel_id, running, chasing, climbing, eating, foraging) %>%
   mutate(
     running = as.factor(running),
     chasing = as.factor(chasing),
@@ -53,14 +54,19 @@ squirrel_data =
     foraging =
       recode(foraging, "FALSE" = "no", "TRUE" = "foraging")) %>%
   pivot_longer(
-    running:other_activities,
-    names_to = "activity",
-    values_to = "participation") %>% view()
+  running:foraging,
+ names_to = "activity",
+ values_to = "participation") %>%
+    mutate(participation = na_if(participation, "no")) %>%
+  view
 ```
 
 
 ```{r}
-#squirrel_data %>% 
- # plot_ly(x = ~cuisine_description, y = ~n, type = "bar"
+squirrel_plot_data = squirrel_data[!is.na(squirrel_data$participation),] 
+
+squirrel_plot_data %>%
+ggplot(aes(x = participation)) +
+  geom_bar()
 ```
 

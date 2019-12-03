@@ -62,9 +62,8 @@ interact_data=squirrel_data %>%
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
-
-```{r}
+## Behaviors of Squirrels when Observed
+```{r, echo=FALSE}
 behaviorpal=colorFactor(
   palette = "viridis",
   levels = unique(behavior_data$behavior)
@@ -81,6 +80,10 @@ behavior_data %>%
             title = 'Behaviors of squirrels',
             opacity = 1)
 ```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
 
 ## Sounds of Squirrels when Observed
 ```{r,echo=FALSE}
@@ -101,18 +104,25 @@ sound_data %>%
             opacity = 1)
 ```
 
-Column {data-width=350}
------------------------------------------------------------------------
 
-### Chart B
 
-```{r}
+## Interactions between Squirrels and Humans
+```{r,echo=FALSE}
+interpal=colorFactor(
+  palette = "plasma",
+  levels = unique(interact_data$interact)
+)
 
+interact_data %>% 
+    leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+      ~ x, ~ y,
+      color = ~interpal(unique(interact)),
+      radius = 1) %>% 
+    addLegend('bottomright', pal = interpal, values = unique(interact_data$interact),
+            title = 'Interactions between squirrels and humans',
+            opacity = 1)
 ```
 
-### Chart C
-
-```{r}
-
-```
 

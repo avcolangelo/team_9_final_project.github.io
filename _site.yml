@@ -10,7 +10,9 @@ navbar:
     - text: Dashboard
       href: flex-dashboard.html
     - text: Common Behaviors
-      href: common_behaviors.html      
+      href: common_behaviors.html
+    - text: Regression Analysis
+      href: Regression-Analysis.html  
     - icon: fa-github fa-lg
       href: https://github.com/avcolangelo/team_9_final_project.github.io
 output:

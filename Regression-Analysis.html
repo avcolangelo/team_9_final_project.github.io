@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Logistic Regression Analysis Using Squirrel Behaviors</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="report.html">Report</a>
+</li>
+<li>
+  <a href="flex-dashboard.html">Dashboard</a>
+</li>
+<li>
+  <a href="https://github.com/avcolangelo/team_9_final_project.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Logistic Regression Analysis Using Squirrel Behaviors</h1>
+
+</div>
+
+
+<div id="motivation-for-regression" class="section level2">
+<h2>Motivation for Regression</h2>
+<p>It is likely that squirrels in Central Park exhibit different behaviors in the morning (AM) and evening (PM) due to sleep, eating, and predator habits. We can examine if squirrel behaviors can allow us to predict whether a sighting occured during the AM or PM using a logistic regression model. We will tidy the dataset to include only squirrel behaviors, the am/pm response variable, and an ID to partition the data. We’ll then split the data into a training and testing set to test multiple models.</p>
+<pre class="r"><code>sq &lt;- read_csv(&quot;./data/squirrel_data.csv&quot;) %&gt;%
+ mutate(AM = ifelse(Shift==&quot;AM&quot;,1,0),
+        id = row_number()) %&gt;%
+  janitor::clean_names() %&gt;%
+  select(id, am, running, chasing, climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches,approaches,indifferent,runs_from)
+
+set.seed(100)
+sq_train &lt;- sample_frac(sq, .8)
+sq_test &lt;- anti_join(sq,sq_train, by = &quot;id&quot;)</code></pre>
+</div>
+<div id="creating-a-logistic-regression-model" class="section level2">
+<h2>Creating a Logistic Regression Model</h2>
+<p>We will create a logistic regression model using the step function, with the direction = “backward”. This will start by creating a regression model with all the potential covariates, and drop the least significant one until it is only left with significant covariates. We are not showing the process of the step function (as it can be quite long), but we will show a summary of the model created.</p>
+<pre class="r"><code>summary(mod1)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = am ~ climbing + eating + foraging + kuks + approaches + 
+##     indifferent + runs_from, family = &quot;binomial&quot;, data = sq_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5736  -1.0760  -0.8991   1.2056   1.6505  
+## 
+## Coefficients:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     -0.50476    0.09696  -5.206 1.93e-07 ***
+## climbingTRUE     0.28940    0.10547   2.744 0.006070 ** 
+## eatingTRUE      -0.36923    0.09875  -3.739 0.000185 ***
+## foragingTRUE    -0.19213    0.08843  -2.173 0.029812 *  
+## kuksTRUE         0.48025    0.23350   2.057 0.039710 *  
+## approachesTRUE   0.48058    0.18211   2.639 0.008317 ** 
+## indifferentTRUE  0.63072    0.09960   6.333 2.41e-10 ***
+## runs_fromTRUE    0.20932    0.11645   1.798 0.072246 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3322.3  on 2417  degrees of freedom
+## Residual deviance: 3250.8  on 2410  degrees of freedom
+## AIC: 3266.8
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+<div id="a-simpler-model" class="section level2">
+<h2>A Simpler Model</h2>
+<p>The step function left many covariates in, but since they are all binary and some behaviors are not displayed very often, we believe it is likely that the model has too many covariates, and could be reduced further. We will also try one model using only the covariates with high degrees of significance, climbing, eating, approaches, and indifferent. We will then compare the two models.</p>
+<pre class="r"><code>mod2 &lt;- glm(formula = am ~ climbing + eating + approaches +
+    indifferent, family = &quot;binomial&quot;, data = sq_train)
+
+summary(mod2)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = am ~ climbing + eating + approaches + indifferent, 
+##     family = &quot;binomial&quot;, data = sq_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.3570  -1.0395  -0.9775   1.1698   1.5491  
+## 
+## Coefficients:
+##                 Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     -0.49020    0.07023  -6.980 2.96e-12 ***
+## climbingTRUE     0.36965    0.10044   3.680 0.000233 ***
+## eatingTRUE      -0.35130    0.09823  -3.576 0.000349 ***
+## approachesTRUE   0.37665    0.17748   2.122 0.033818 *  
+## indifferentTRUE  0.50806    0.08541   5.949 2.70e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3322.3  on 2417  degrees of freedom
+## Residual deviance: 3263.4  on 2413  degrees of freedom
+## AIC: 3273.4
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM.</p>
+<p>The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the results of the models using a 2x2 table of accuracy of predictions in the test dataset.</p>
+</div>
+<div id="prediction-accuracy-results-of-our-models" class="section level2">
+<h2>Prediction Accuracy Results of our Models</h2>
+<table>
+<caption>Accuracy for mod1</caption>
+<thead>
+<tr class="header">
+<th align="right">am</th>
+<th align="right">0</th>
+<th align="right">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">281</td>
+<td align="right">52</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">205</td>
+<td align="right">67</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>Accuracy for mod2</caption>
+<thead>
+<tr class="header">
+<th align="right">am</th>
+<th align="right">0</th>
+<th align="right">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0</td>
+<td align="right">237</td>
+<td align="right">96</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">154</td>
+<td align="right">118</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Model 1 with more covariates had better specificity 281/(281+52) = 84%, but very poor sensitivity 67/(67+205) = 24.5%. Model 2 with fewer covariate had a slightly lower specificity 237/(237+96) = 71%, and slightly better sensitivity 118/(118+154) = 43%.</p>
+<p>Regarding overall accuracy, model 2 was slightly better, but both models predictions are quite poor (below 60% accuracy for both), so it does not appear to be reasonable to attempt to predict the time of day based on observed squirrel behavior in Central Park. Part of this may be due to the limited amount of squirrel behaviors recorded per row.</p>
+<pre><code>##  total_behaviors
+##  Min.   :0.000  
+##  1st Qu.:2.000  
+##  Median :2.000  
+##  Mean   :2.288  
+##  3rd Qu.:3.000  
+##  Max.   :8.000</code></pre>
+<p>With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once. However, it is also possible that there is not a very significant difference in squirrel behaviors in the AM and PM, so attempting to use squirrel behaviors to predict time of day would not work even with a more comprehensive dataset.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

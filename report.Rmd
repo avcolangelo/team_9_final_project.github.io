@@ -21,7 +21,11 @@ Your report should include the following topics. Depending on your project type 
 
 * Motivation: Provide an overview of the project goals and motivation.
 
+The motivation for our project was to create a sort of guide for Squirral Watchers in NYC. Birdwatching is a commonon hobby and there are many books, websites and resources surrounding this hobby. Unfortunalty squirral watching is not as popular and is mostly only active on college campuses. To bring more attention to this hobby, and to increase the number of squirral watchers in NYC we created our website to serve as a resource for the Squirral watching community in NYC. We wanted to help this community identify where one could watch certain squirral behaviors (i.e. foraging and climbing), squirral sounds (i.e.kuks and quaas), and identify if there was a pattern in where one could expect different interactions between squirral and humans (i.e. the squirral approaches humans or is indifferent) Since alot of tourists visit NYC, we focused on Squirral watching in Central Park. 
+
 * Related work: Anything that inspired you, such as a paper, a web site, or something we discussed in class.
+
+The following website:https://www.prospectpark.org/visit-the-park/things-to-do/birdwatching/?gclid=EAIaIQobChMImM7nuKaa5gIViZOzCh1NYAGQEAAYASAAEgLlPPD_BwE is a resource platform for birdwatching in Prospect Park that inspired some of the work and resources we included in our project. The Prospect park website  shows a map with some of the best birding locations, our maps similarly try to identify where certain squirral behaviours can be obserbed. 
 
 * Initial questions: What questions are you trying to answer? How did these questions evolve over the course of the project? What new questions did you consider in the course of your analysis?:
 

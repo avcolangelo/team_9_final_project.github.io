@@ -41,6 +41,15 @@ behaviors?
     statistical analyses. Justify the steps you took, and show any major
     changes to your ideas.
 
+When looking at the most common squirrel behaviors, we removed the
+category of “other activities” from analysis because the range of
+entries varied too widely (which would make it difficult to visualize
+effectively) and would be very time consuming to wrangle. Instead, we
+decided to focus on the five main categories of behaviors. When looking
+at the primary fur color of squirrels, 55 squirrels had missing data for
+fur color, so to simplify the visualization we decided to remove the
+missing data.
+
   - Additional analysis: If you undertake formal statistical analyses,
     describe these in detail Discussion: What were your findings? Are
     they what you expect? What insights into the data can you make? As

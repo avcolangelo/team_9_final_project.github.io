@@ -59,8 +59,6 @@ interact_data=squirrel_data %>%
   filter(observe==1)
 ```
 
-Column {data-width=650}
------------------------------------------------------------------------
 
 ## Behaviors of Squirrels when Observed
 ```{r, echo=FALSE}
@@ -80,9 +78,6 @@ behavior_data %>%
             title = 'Behaviors of squirrels',
             opacity = 1)
 ```
-
-Column {data-width=350}
------------------------------------------------------------------------
 
 
 ## Sounds of Squirrels when Observed

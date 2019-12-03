@@ -9,6 +9,8 @@ navbar:
       href: report.html      
     - text: Dashboard
       href: flex-dashboard.html
+    - text: Common Behaviors
+      href: common_behaviors.html      
     - icon: fa-github fa-lg
       href: https://github.com/avcolangelo/team_9_final_project.github.io
 output:

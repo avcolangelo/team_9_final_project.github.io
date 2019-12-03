@@ -11,7 +11,52 @@ library(flexdashboard)
 library(tidyverse)
 library(p8105.datasets)
 library(plotly)
+library(viridis)
+library(leaflet)
+```
 
+```{r, include=FALSE}
+#import squirrel data
+squirrel_data=
+  read.csv("./data/squirrel_data.csv")%>% 
+  janitor::clean_names()
+
+#filter data only include behaviors
+behavior_data=squirrel_data %>% 
+  select(x,y,running:foraging, tail_flags, tail_twitches) %>% 
+  group_by(x,y) %>% 
+  mutate(running=as.integer(as.factor(running)),
+         chasing=as.integer(as.factor(chasing)),
+         climbing=as.integer(as.factor(climbing)),
+         eating=as.integer(as.factor(eating)),
+         foraging=as.integer(as.factor(foraging)),
+         tail_flags=as.integer(as.factor(tail_flags)),
+         tail_twitches=as.integer(as.factor(tail_twitches))
+         ) %>%
+  gather(key="behavior", value="observe", -x,-y) %>% 
+  filter(observe==1)
+
+#filter data only include sounds
+sound_data=squirrel_data %>% 
+  select(x,y,kuks:moans) %>% 
+  group_by(x,y) %>% 
+  mutate(kuks=as.integer(as.factor(kuks)),
+         quaas=as.integer(as.factor(quaas)),
+         moans=as.integer(as.factor(moans))
+         ) %>%
+  gather(key="sound", value="observe", kuks:moans) %>% 
+  filter(observe==1)
+
+#filter data only include interactions with human
+interact_data=squirrel_data %>% 
+  select(x,y,approaches:runs_from) %>% 
+  group_by(x,y) %>% 
+  mutate(approaches=as.integer(as.factor(approaches)),
+         indifferent=as.integer(as.factor(indifferent)),
+         runs_from_human=as.integer(as.factor(runs_from))
+         ) %>%
+  gather(key="interact", value="observe", -x,-y) %>% 
+  filter(observe==1)
 ```
 
 Column {data-width=650}
@@ -20,7 +65,40 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
+behaviorpal=colorFactor(
+  palette = "viridis",
+  levels = unique(behavior_data$behavior)
+)
 
+behavior_data %>% 
+    leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+      ~ x, ~ y,
+      color = ~behaviorpal(unique(behavior)),
+      radius = 1) %>% 
+    addLegend('bottomright', pal = behaviorpal, values = unique(behavior_data$behavior),
+            title = 'Behaviors of squirrels',
+            opacity = 1)
+```
+
+## Sounds of Squirrels when Observed
+```{r,echo=FALSE}
+soundpal=colorFactor(
+  palette = "magma",
+  levels = unique(sound_data$sound)
+)
+
+sound_data %>% 
+    leaflet() %>% 
+    addTiles() %>% 
+    addCircleMarkers(
+      ~ x, ~ y,
+      color = ~soundpal(unique(sound)),
+      radius = 1) %>% 
+    addLegend('bottomright', pal = soundpal, values = unique(sound_data$sound),
+            title = 'Sounds made by squirrels',
+            opacity = 1)
 ```
 
 Column {data-width=350}

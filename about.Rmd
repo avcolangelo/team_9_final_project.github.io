@@ -4,7 +4,7 @@ title: "About"
 
 On this website, you will find information about the behaviors and sounds made by squirrels, and their interactions with people, in Central Park in New York City. 
 
-The data that are used are the 2018 Central Park Squirrel Data from NYC Open Data, which can be found here (https://opendata.cityofnewyork.us)  
+The data that are used are the 2018 Central Park Squirrel Data from NYC Open Data, which can be found [here](https://opendata.cityofnewyork.us).   
 
 
 <img src="squirrel2.jpg">

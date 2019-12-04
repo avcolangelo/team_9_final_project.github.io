@@ -8,3 +8,5 @@ output:
 ---
 
 <img src="Squirrel.JPG" alt="Squirrel">
+
+## Learn about the different kinds of behaviors squirrels in Central Park exhibit!

@@ -55,7 +55,7 @@ For our Logistic regression analysis, we imported the data but not very much dat
 
 ## Exploratory analysis: 
 
-When looking at the squirrel behavior maps, our motivation for visualisation was to deal with the location of certain behaviors and sounds of squirrels more straightforward. We also recoded logical vaviables of squirrel sounds, behaviors and interaction between human to be 0 or 1 in order to tidy data, then using leaflet to obtain the map of central park in NYC. It shows overall each behavior and sound are nearly evenly distributed among central park, so observers might have a chance to watch any behaviors, sounds or interact with squirrels.
+When looking at the squirrel behavior maps, our motivation for visualisation was to deal with the location of certain behaviors and sounds of squirrels in a more straightforward fashion. We also recoded logical vaviables of squirrel sounds, behaviors and interactions between humans and squirrels to be 0 or 1 in order to tidy data. Then using leaflet we obtained the map of central park in NYC. The maps show overall that each behavior and sound are nearly evenly distributed among central park, so observers might have a chance to watch any behaviors, sounds or interact with squirrels.
 
 When looking at the most common squirrel behaviors, we removed the category of "other activities" from analysis because the range of entries varied too widely (which would make it difficult to visualize effectively) and would be very time consuming to wrangle. Instead, we decided to focus on the five main categories of behaviors. When looking at the primary fur color of squirrels, 55 squirrels had missing data for fur color, so to simplify the visualization we decided to remove the missing data. 
 

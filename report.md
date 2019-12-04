@@ -22,18 +22,51 @@ vary:
 
   - Motivation: Provide an overview of the project goals and motivation.
 
+The motivation for our project was to create a sort of guide for
+Squirral Watchers in NYC. Birdwatching is a commonon hobby and there are
+many books, websites and resources surrounding this hobby. Unfortunalty
+squirral watching is not as popular and is mostly only active on college
+campuses. To bring more attention to this hobby, and to increase the
+number of squirral watchers in NYC we created our website to serve as a
+resource for the Squirral watching community in NYC. We wanted to help
+this community identify where one could watch certain squirral behaviors
+(i.e. foraging and climbing), squirral sounds (i.e.kuks and quaas), and
+identify if there was a pattern in where one could expect different
+interactions between squirral and humans (i.e. the squirral approaches
+humans or is indifferent) Since alot of tourists visit NYC, we focused
+on Squirral watching in Central Park.
+
   - Related work: Anything that inspired you, such as a paper, a web
     site, or something we discussed in class.
+
+The following
+website:<https://www.prospectpark.org/visit-the-park/things-to-do/birdwatching/?gclid=EAIaIQobChMImM7nuKaa5gIViZOzCh1NYAGQEAAYASAAEgLlPPD_BwE>
+is a resource platform for birdwatching in Prospect Park that inspired
+some of the work and resources we included in our project. The Prospect
+park website shows a map with some of the best birding locations, our
+maps similarly try to identify where certain squirral behaviours can be
+obserbed.
 
   - Initial questions: What questions are you trying to answer? How did
     these questions evolve over the course of the project? What new
     questions did you consider in the course of your analysis?:
 
 – What is the probability of a certain squirrel in a certain area;
-visualize this probability/heat map – regression question: number
-(count) of squirrels seen eating as predicted by foraging – Where are
-squirrels are most concentrated? – What are the most common squirrel
-behaviors?
+visualize this probability/heat map. This questions turned into a
+question of where ceratin behaviors had been, and thus could potentially
+be obserbed.
+
+– regression question: number (count) of squirrels seen eating as
+predicted by foraging. Can time of day be predicted by squiral
+behaviors. Different number of covariates were tested and one model won
+out. The prediction of the model as a whole was not good. better
+prediction, if squiral was tracked all day.
+
+– Where are squirrels are most concentrated? This question went as we
+switched directions from concentration of squirals to behaviours.
+
+– What are the most common squirrel behaviors? Foraging is the most
+common observed behavior.
 
   - Data: Source, scraping method, cleaning, etc.
 

@@ -23,8 +23,14 @@ sq <- read_csv("./data/squirrel_data.csv") %>%
   select(id, am, running, chasing, climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches,approaches,indifferent,runs_from)
 
 set.seed(100)
+
 sq_train <- sample_frac(sq, .8)
 sq_test <- anti_join(sq,sq_train, by = "id")
+
+sq_train <- sq_train %>%
+  select(-id)
+sq_test <- sq_test %>%
+  select(-id)
 ```
 
 ## Creating a Logistic Regression Model

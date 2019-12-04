@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -234,6 +233,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -286,6 +286,12 @@ $(document).ready(function () {
   <a href="flex-dashboard.html">Dashboard</a>
 </li>
 <li>
+  <a href="common_behaviors.html">Common Behaviors</a>
+</li>
+<li>
+  <a href="Regression-Analysis.html">Regression Analysis</a>
+</li>
+<li>
   <a href="https://github.com/avcolangelo/team_9_final_project.github.io">
     <span class="fa fa-github fa-lg"></span>
      
@@ -315,8 +321,14 @@ $(document).ready(function () {
   select(id, am, running, chasing, climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches,approaches,indifferent,runs_from)
 
 set.seed(100)
+
 sq_train &lt;- sample_frac(sq, .8)
-sq_test &lt;- anti_join(sq,sq_train, by = &quot;id&quot;)</code></pre>
+sq_test &lt;- anti_join(sq,sq_train, by = &quot;id&quot;)
+
+sq_train &lt;- sq_train %&gt;%
+  select(-id)
+sq_test &lt;- sq_test %&gt;%
+  select(-id)</code></pre>
 </div>
 <div id="creating-a-logistic-regression-model" class="section level2">
 <h2>Creating a Logistic Regression Model</h2>

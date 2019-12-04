@@ -1,5 +1,5 @@
 ---
-title: "A Guide to Squirrels in Central Park"
+title: "A Guide for Squirrel Sighting in Central Park, NYC"
 output: 
   html_document:
     toc: true

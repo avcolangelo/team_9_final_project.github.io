@@ -1,0 +1,92 @@
+---
+title: "Logistic Regression Analysis Using Squirrel Behaviors"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(modelr)
+```
+
+## Motivation for Regression
+
+It is likely that squirrels in Central Park exhibit different behaviors in the morning (AM) and evening (PM) due to sleep, eating, and predator habits. We can examine if squirrel behaviors can allow us to predict whether a sighting occured during the AM or PM using a logistic regression model. We will tidy the dataset to include only squirrel behaviors, the am/pm response variable, and an ID to partition the data. We'll then split the data into a training and testing set to test multiple models.
+
+```{r lm analysis start, message = F}
+sq <- read_csv("./data/squirrel_data.csv") %>%
+ mutate(AM = ifelse(Shift=="AM",1,0),
+        id = row_number()) %>%
+  janitor::clean_names() %>%
+  select(id, am, running, chasing, climbing, eating, foraging, kuks, quaas, moans, tail_flags, tail_twitches,approaches,indifferent,runs_from)
+
+set.seed(100)
+sq_train <- sample_frac(sq, .8)
+sq_test <- anti_join(sq,sq_train, by = "id")
+```
+
+## Creating a Logistic Regression Model
+
+We will create a logistic regression model using the step function, with the direction = "backward". This will start by creating a regression model with all the potential covariates, and drop the least significant one until it is only left with significant covariates. We are not showing the process of the step function (as it can be quite long), but we will show a summary of the model created.
+
+```{r creating a model, echo = F, results = F}
+mod1 <- step(glm(am ~., data = sq_train, family = "binomial"),direction = "backward")
+```
+
+```{r summary of mod 1}
+summary(mod1)
+```
+
+## A Simpler Model
+
+The step function left many covariates in, but since they are all binary and some behaviors are not displayed very often, we believe it is likely that the model has too many covariates, and could be reduced further. We will also try one model using only the covariates with high degrees of significance, climbing, eating, approaches, and indifferent. We will then compare the two models.
+
+``` {r creating a second model}  
+mod2 <- glm(formula = am ~ climbing + eating + approaches +
+    indifferent, family = "binomial", data = sq_train)
+
+summary(mod2)
+```
+
+In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM.
+
+The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the results of the models using a 2x2 table of accuracy of predictions in the test dataset.
+
+## Prediction Accuracy Results of our Models
+
+```{r evaluating the models, echo = F}
+sq_test %>%
+  mutate(pred = predict.glm(mod1, sq_test),
+         pred_cleaned = ifelse(pred>=0,1,0)) %>%
+  group_by(am,pred_cleaned) %>%
+  summarise(n = n()) %>%
+  pivot_wider(names_from = pred_cleaned,
+              values_from = n) %>%
+  knitr::kable(caption = "Accuracy for mod1")
+
+sq_test %>%
+  mutate(pred = predict.glm(mod2, sq_test),
+         pred_cleaned = ifelse(pred>=0,1,0)) %>%
+  group_by(am,pred_cleaned) %>%
+  summarise(n = n()) %>%
+  pivot_wider(names_from = pred_cleaned,
+              values_from = n) %>%
+  knitr::kable(caption = "Accuracy for mod2")
+```
+
+## Conclusion
+
+Model 1 with more covariates had better specificity 281/(281+52) = 84%, but very poor sensitivity 67/(67+205) = 24.5%. Model 2 with fewer covariate had a slightly lower specificity 237/(237+96) = 71%, and slightly better sensitivity 118/(118+154) = 43%.
+
+Regarding overall accuracy, model 2 was slightly better, but both models predictions are quite poor (below 60% accuracy for both), so it does not appear to be reasonable to attempt to predict the time of day based on observed squirrel behavior in Central Park. Part of this may be due to the limited amount of squirrel behaviors recorded per row.
+
+```{r squirrel beaviors per row, echo = F}
+sq %>%
+  mutate(total_behaviors = running + chasing + climbing + eating + foraging + kuks + quaas + moans + tail_flags + tail_twitches + approaches + indifferent + runs_from) %>%
+  select(total_behaviors) %>%
+  summary()
+```
+
+With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once. However, it is also possible that there is not a very significant difference in squirrel behaviors in the AM and PM, so attempting to use squirrel behaviors to predict time of day would not work even with a more comprehensive dataset.

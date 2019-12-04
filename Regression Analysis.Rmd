@@ -56,33 +56,41 @@ mod2 <- glm(formula = am ~ climbing + eating + approaches +
 summary(mod2)
 ```
 
-In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM.
+## Model Results
 
-The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the results of the models using a 2x2 table of accuracy of predictions in the test dataset.
+In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM, and the associations are very significant.
 
-## Prediction Accuracy Results of our Models
+The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the models by examining the accuracy of predictions in the test dataset.
+
+## Model Predictions
 
 ```{r evaluating the models, echo = F}
 sq_test %>%
   mutate(pred = predict.glm(mod1, sq_test),
-         pred_cleaned = ifelse(pred>=0,1,0)) %>%
-  group_by(am,pred_cleaned) %>%
+         pred_cleaned = ifelse(pred>=0,1,0),
+         predictions = ifelse(pred_cleaned==1,"Predicted AM","Predicted PM"),
+         ` ` = ifelse(am==1,"Actual AM","Actual PM")
+         ) %>%
+  group_by(` `,predictions) %>%
   summarise(n = n()) %>%
-  pivot_wider(names_from = pred_cleaned,
+  pivot_wider(names_from = predictions,
               values_from = n) %>%
   knitr::kable(caption = "Accuracy for mod1")
 
 sq_test %>%
   mutate(pred = predict.glm(mod2, sq_test),
-         pred_cleaned = ifelse(pred>=0,1,0)) %>%
-  group_by(am,pred_cleaned) %>%
+         pred_cleaned = ifelse(pred>=0,1,0),
+         predictions = ifelse(pred_cleaned==1,"Predicted AM","Predicted PM"),
+         ` ` = ifelse(am==1,"Actual AM","Actual PM")
+         ) %>%
+  group_by(` `,predictions) %>%
   summarise(n = n()) %>%
-  pivot_wider(names_from = pred_cleaned,
+  pivot_wider(names_from = predictions,
               values_from = n) %>%
   knitr::kable(caption = "Accuracy for mod2")
 ```
 
-## Conclusion
+## Prediction Results
 
 Model 1 with more covariates had better specificity 281/(281+52) = 84%, but very poor sensitivity 67/(67+205) = 24.5%. Model 2 with fewer covariate had a slightly lower specificity 237/(237+96) = 71%, and slightly better sensitivity 118/(118+154) = 43%.
 
@@ -95,4 +103,4 @@ sq %>%
   summary()
 ```
 
-With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once. However, it is also possible that there is not a very significant difference in squirrel behaviors in the AM and PM, so attempting to use squirrel behaviors to predict time of day would not work even with a more comprehensive dataset.
+With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once.

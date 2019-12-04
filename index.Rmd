@@ -9,4 +9,6 @@ output:
 
 <img src="Squirrel.JPG" alt="Squirrel">
 
-## Learn about the different kinds of behaviors squirrels in Central Park exhibit!
+# Learn about the different kinds of behaviors squirrels in Central Park exhibit, and more!
+
+# Brought to you by Columbia University Masters students Dania Jafar, Kristal Quispe, Alexis Colangelo, Si Li, and Barik Rajpal.

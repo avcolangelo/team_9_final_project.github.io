@@ -6,7 +6,6 @@ On this website, you will find information about the types of squirrels, locatio
 
 The data that are used are the 2018 Central Park Squirrel Data from NYC Open Data. 
 
-This project is created by Columbia University students Dania Jafar, Kristal Quispe, Alexis Colangelo, Si Li, and Barik Rajpal.
 
 <img src="squirrel2.jpg">
 

@@ -397,30 +397,33 @@ summary(mod2)</code></pre>
 ## AIC: 3273.4
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<p>In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM.</p>
-<p>The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the results of the models using a 2x2 table of accuracy of predictions in the test dataset.</p>
 </div>
-<div id="prediction-accuracy-results-of-our-models" class="section level2">
-<h2>Prediction Accuracy Results of our Models</h2>
+<div id="model-results" class="section level2">
+<h2>Model Results</h2>
+<p>In both models, eating as a squirrel behavior is more associated with the PM, and climbing, indifferent, and approaches behaviors are more associated with the AM, and the associations are very significant.</p>
+<p>The AIC increased slightly when removing three covariates, but only slightly, so the smaller model may be better due to parsimony. We can further evaluate the models by examining the accuracy of predictions in the test dataset.</p>
+</div>
+<div id="model-predictions" class="section level2">
+<h2>Model Predictions</h2>
 <table>
 <caption>Accuracy for mod1</caption>
 <thead>
 <tr class="header">
-<th align="right">am</th>
-<th align="right">0</th>
-<th align="right">1</th>
+<th></th>
+<th align="right">Predicted AM</th>
+<th align="right">Predicted PM</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">0</td>
-<td align="right">281</td>
-<td align="right">52</td>
+<td>Actual AM</td>
+<td align="right">67</td>
+<td align="right">205</td>
 </tr>
 <tr class="even">
-<td align="right">1</td>
-<td align="right">205</td>
-<td align="right">67</td>
+<td>Actual PM</td>
+<td align="right">52</td>
+<td align="right">281</td>
 </tr>
 </tbody>
 </table>
@@ -428,27 +431,27 @@ summary(mod2)</code></pre>
 <caption>Accuracy for mod2</caption>
 <thead>
 <tr class="header">
-<th align="right">am</th>
-<th align="right">0</th>
-<th align="right">1</th>
+<th></th>
+<th align="right">Predicted AM</th>
+<th align="right">Predicted PM</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="right">0</td>
-<td align="right">237</td>
-<td align="right">96</td>
+<td>Actual AM</td>
+<td align="right">118</td>
+<td align="right">154</td>
 </tr>
 <tr class="even">
-<td align="right">1</td>
-<td align="right">154</td>
-<td align="right">118</td>
+<td>Actual PM</td>
+<td align="right">96</td>
+<td align="right">237</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
+<div id="prediction-results" class="section level2">
+<h2>Prediction Results</h2>
 <p>Model 1 with more covariates had better specificity 281/(281+52) = 84%, but very poor sensitivity 67/(67+205) = 24.5%. Model 2 with fewer covariate had a slightly lower specificity 237/(237+96) = 71%, and slightly better sensitivity 118/(118+154) = 43%.</p>
 <p>Regarding overall accuracy, model 2 was slightly better, but both models predictions are quite poor (below 60% accuracy for both), so it does not appear to be reasonable to attempt to predict the time of day based on observed squirrel behavior in Central Park. Part of this may be due to the limited amount of squirrel behaviors recorded per row.</p>
 <pre><code>##  total_behaviors
@@ -458,7 +461,7 @@ summary(mod2)</code></pre>
 ##  Mean   :2.288  
 ##  3rd Qu.:3.000  
 ##  Max.   :8.000</code></pre>
-<p>With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once. However, it is also possible that there is not a very significant difference in squirrel behaviors in the AM and PM, so attempting to use squirrel behaviors to predict time of day would not work even with a more comprehensive dataset.</p>
+<p>With a median of only 2 behaviors recorded per observation, it is possible we would have been able to create a better logisitic regression model if the squirrels were observed for a longer period of time per recorded observation, so that many behaviors could be observed and recorded at once.</p>
 </div>
 
 

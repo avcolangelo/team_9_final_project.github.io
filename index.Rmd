@@ -9,6 +9,6 @@ output:
 
 <img src="Squirrel.JPG" alt="Squirrel">
 
-There are a bunch of squirrels that live in Central Park -- 2373 to be exact! Learn about the different kinds of behaviors squirrels there exhibit, and more!
+There are a bunch of squirrels that live in Central Park -- 3023 were obserbed and accounted for in October of 2019! Learn about the different kinds of behaviors squirrels there exhibit, and more!
 
 Brought to you by Columbia University Masters students Dania Jafar, Kristal Quispe, Alexis Colangelo, Si Li, and Barik Rajpal.

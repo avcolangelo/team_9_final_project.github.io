@@ -11,4 +11,6 @@ output:
 
 There are a bunch of squirrels that live in Central Park -- 3023 were obserbed and accounted for in October of 2018! Learn about the different kinds of behaviors squirrels there exhibit, and more!
 
+For a brief overview of our website, view our screencast [here](https://youtu.be/MDrICAjA-ec).
+
 Brought to you by Columbia University Masters students Dania Jafar, Kristal Quispe, Alexis Colangelo, Si Li, and Barik Rajpal.
